@@ -21,7 +21,7 @@ export default function Home() {
                     color={colors.green[200]}
                     size={20} 
                     />
-                    <Input.Field placeholder="Oiiii" />
+                    <Input.Field placeholder="Código do ingresso" />
                 </Input>
             </View>
 
