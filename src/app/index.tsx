@@ -1,6 +1,9 @@
 import { View, Image } from "react-native"
+import {  MaterialCommunityIcons } from "@expo/vector-icons"
 
 import { Input } from "@/components/input"
+
+import { colors } from "@/styles/colors"
 
 export default function Home() {
     return (
@@ -13,7 +16,12 @@ export default function Home() {
 
             <View className="w-full mt-12 gap-3">
                 <Input>
-                    <Input.Field />
+                    <MaterialCommunityIcons 
+                    name="ticket-confirmation-outline" 
+                    color={colors.green[200]}
+                    size={20} 
+                    />
+                    <Input.Field placeholder="Oiiii" />
                 </Input>
             </View>
 
