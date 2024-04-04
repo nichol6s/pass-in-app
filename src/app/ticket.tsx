@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { View, StatusBar, Text, ScrollView, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, StatusBar, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, Modal } from "react-native";
 import { FontAwesome } from '@expo/vector-icons'
 import * as ImagePicker from "expo-image-picker"
 
@@ -9,10 +9,11 @@ import { Credential } from "@/components/credential";
 
 import { colors } from "@/styles/colors";
 import { Button } from "@/components/button";
+import { QRCode } from "@/components/qrcode";
 
 export default function Ticket() {
-
     const [image, setImage] = useState("")
+    const [expandQRCode, setExpandQRCode] = useState(false)
 
     async function handleSelectImage(){
         try{
@@ -38,7 +39,11 @@ export default function Ticket() {
             <Header title="Minha credencial" />
 
             <ScrollView className="-mt-28 -z-10" contentContainerClassName="px-8 pb-8" showsVerticalScrollIndicator={false}>
-                <Credential image={image} onChangeAvatar={handleSelectImage} />
+                <Credential 
+                image={image} 
+                onChangeAvatar={handleSelectImage} 
+                onExpandQRCode={() => setExpandQRCode(true)}
+                />
 
                 <FontAwesome
                     name="angle-double-down"
@@ -56,6 +61,20 @@ export default function Ticket() {
                     <Text className="text-base text-white font-bold text-center">Remover Ingresso</Text>
                 </TouchableOpacity>
             </ScrollView>
+
+            <Modal visible={expandQRCode} statusBarTranslucent animationType="slide" >
+                <View className="flex-1 bg-green-500 items-center justify-center">
+
+                    <QRCode 
+                    value="teste"
+                    size={300}
+                    />
+
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => setExpandQRCode(false)}>
+                        <Text className="font-body text-orange-500 text-sm mt-10">Fechar QRCode</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </View>
     )
 }
