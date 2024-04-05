@@ -7,15 +7,29 @@ import { Link } from "expo-router"
 import { Input } from "@/components/input"
 import { Button } from "@/components/button"
 
+import { api } from '@/server/api'
+
 import { colors } from "@/styles/colors"
 
 export default function Home() {
 
     const [code, setCode] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleAcessCredential(){
+        try{
         if(!code.trim()){
             return Alert.alert("Credencial", "Informe o código do ingresso!")
+        }
+
+        setIsLoading(true)
+
+        api.get(`/attendees/${code}/badge`)
+
+        }catch (error){
+            console.log(error)
+            setIsLoading(false)
+            Alert.alert("Ingresso", "Ingresso não encontrado!")
         }
     }
     
