@@ -25,7 +25,7 @@ export function Credential({ data, onChangeAvatar, onExpandQRCode }: Props) {
         from={{ 
             opacity: 0, 
             translateY: -height,
-            rotateZ: "40deg",
+            rotateZ: "50deg",
             rotateY: "30deg",
             rotateX: "30deg"
         }}  
