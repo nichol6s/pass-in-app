@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { View, StatusBar, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, Modal, Share } from "react-native";
+import { MotiView } from "moti"
 import { FontAwesome } from '@expo/vector-icons'
 import * as ImagePicker from "expo-image-picker"
 import { Redirect } from "expo-router";
@@ -20,16 +21,16 @@ export default function Ticket() {
 
     const badgeStore = useBadgeStore()
 
-    async function handleShare(){
-        try{
+    async function handleShare() {
+        try {
 
-            if(badgeStore.data?.checkInURL){
+            if (badgeStore.data?.checkInURL) {
                 await Share.share({
                     message: badgeStore.data.checkInURL
                 })
             }
 
-        }catch(error){
+        } catch (error) {
             console.log(error)
             Alert.alert("Compartilhar", "Não foi possível compartilhar")
         }
@@ -69,12 +70,26 @@ export default function Ticket() {
                     onExpandQRCode={() => setExpandQRCode(true)}
                 />
 
-                <FontAwesome
-                    name="angle-double-down"
-                    size={24}
-                    color={colors.gray[300]}
-                    className="self-center my-6"
-                />
+                <MotiView
+                    from={{
+                        translateY: 0
+                    }}
+                    animate={{
+                        translateY: 10,
+                    }}
+                    transition={{
+                        loop: true,
+                        type: "timing",
+                        duration: 700,
+                    }}
+                >
+                    <FontAwesome
+                        name="angle-double-down"
+                        size={24}
+                        color={colors.gray[300]}
+                        className="self-center my-6"
+                    />
+                </MotiView>
 
                 <Text className="text-white font-bold text-2xl mt-4">Compartilhar Credencial</Text>
                 <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do evento {badgeStore.data.eventTitle}</Text>
@@ -90,12 +105,12 @@ export default function Ticket() {
                 <View className="flex-1 bg-green-500 items-center justify-center">
 
                     <QRCode
-                        value="teste"
+                        value={badgeStore.data.checkInURL}
                         size={300}
                     />
 
                     <TouchableOpacity activeOpacity={0.7} onPress={() => setExpandQRCode(false)}>
-                        <Text className="font-body text-orange-500 text-sm mt-10">Fechar QRCode</Text>
+                        <Text className="font-body text-orange-500 text-xl mt-10">Fechar QRCode</Text>
                     </TouchableOpacity>
                 </View>
             </Modal>
