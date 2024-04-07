@@ -15,30 +15,30 @@ import { Button } from "@/components/button";
 import { QRCode } from "@/components/qrcode";
 
 export default function Ticket() {
-    const [image, setImage] = useState("")
+
     const [expandQRCode, setExpandQRCode] = useState(false)
 
     const badgeStore = useBadgeStore()
 
-    async function handleSelectImage(){
-        try{
+    async function handleSelectImage() {
+        try {
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
                 aspect: [4, 4]
             })
 
-            if(result.assets){
-                setImage(result.assets[0].uri)
+            if (result.assets) {
+                badgeStore.updateAvatar(result.assets[0].uri)
             }
 
-        }catch (error){
+        } catch (error) {
             console.log(error)
             Alert.alert("Foto", "Nao foi possivel selecionar a imagem")
         }
     }
 
-    if(!badgeStore.data?.checkInURL){
+    if (!badgeStore.data?.checkInURL) {
         return <Redirect href="/" />
     }
 
@@ -48,10 +48,10 @@ export default function Ticket() {
             <Header title="Minha credencial" />
 
             <ScrollView className="-mt-28 -z-10" contentContainerClassName="px-8 pb-8" showsVerticalScrollIndicator={false}>
-                <Credential 
-                image={image} 
-                onChangeAvatar={handleSelectImage} 
-                onExpandQRCode={() => setExpandQRCode(true)}
+                <Credential
+                    data={badgeStore.data}
+                    onChangeAvatar={handleSelectImage}
+                    onExpandQRCode={() => setExpandQRCode(true)}
                 />
 
                 <FontAwesome
@@ -62,9 +62,9 @@ export default function Ticket() {
                 />
 
                 <Text className="text-white font-bold text-2xl mt-4">Compartilhar Credencial</Text>
-                <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do Unite Summit</Text>
+                <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do evento {badgeStore.data.eventTitle}</Text>
 
-                <Button title="Compartilhar"/>
+                <Button title="Compartilhar" />
 
                 <TouchableOpacity activeOpacity={0.7} style={styles.touchable} onPress={() => badgeStore.remove()} >
                     <Text className="text-base text-white font-bold text-center">Remover Ingresso</Text>
@@ -74,9 +74,9 @@ export default function Ticket() {
             <Modal visible={expandQRCode} statusBarTranslucent animationType="slide" >
                 <View className="flex-1 bg-green-500 items-center justify-center">
 
-                    <QRCode 
-                    value="teste"
-                    size={300}
+                    <QRCode
+                        value="teste"
+                        size={300}
                     />
 
                     <TouchableOpacity activeOpacity={0.7} onPress={() => setExpandQRCode(false)}>
@@ -89,7 +89,7 @@ export default function Ticket() {
 }
 
 const styles = StyleSheet.create({
-    touchable:{
+    touchable: {
         marginTop: 30
     }
 })
