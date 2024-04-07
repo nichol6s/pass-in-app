@@ -26,6 +26,6 @@ export const useBadgeStore = create(persist<StateProps>((set) => ({
         data: state.data ? { ...state.data, image: uri } : state.data
     }))
 }), {
-    name: "pass-in-app:badge",
+    name: "nlw-unite:badge",
     storage: createJSONStorage(() => AsyncStorage)
 }))

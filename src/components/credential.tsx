@@ -54,7 +54,7 @@ export function Credential({ data, onChangeAvatar, onExpandQRCode }: Props) {
                 >
                     <View className="w-full flex-row item-center justify-between">
                         <Text className="text-zinc-50 text-sm font-bold">{data.eventTitle}</Text>
-                        <Text className="text-zinc-50 text-sm font-bold">{data.id}</Text>
+                        <Text className="text-zinc-50 text-sm font-bold">#{data.id}</Text>
                     </View>
 
                     <View className="w-40 h-40 bg-black rounded-full" />
