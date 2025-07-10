@@ -36,28 +36,3 @@ $ npm install
 # Start the app
 $ npx expo start
 ```
-
-### Back-end
-To access the back-end server, go to the following repository: [Back-End Node](https://github.com/nichol6s/pass-in-backend)
-```sh
-# Clone the repository
-$ git clone https://github.com/nichol6s/pass-in-backend
-
-# Install the dependencies
-$ npm install
-
-# Create a .env file in the project root and add the following:
-"DATABASE_URL="file:./dbsqlite.db”
-
-# Execute the command
-$ npx prisma generate
-
-# Execute the command
-$ npx prisma db seed
-
-# Start the server
-$ npm run dev
-
-# To view the database through Prisma Studio, execute the command
-$ npx prisma studio # Make sure Android Studio is not open at this time
-```
